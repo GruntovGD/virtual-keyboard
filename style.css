@@ -1,0 +1,19 @@
+.keyboard {
+  background: black;
+  border: 1px solid red;
+  display: flex;
+  flex-wrap: wrap;
+  width: 1200px;
+  margin: 0 auto;
+}
+.keyboard__buttn {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid black;
+  min-width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: grey;
+}
