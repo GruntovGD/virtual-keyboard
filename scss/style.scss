@@ -16,6 +16,7 @@
     align-items: center;
     justify-content: center;
     background: grey;
+    transition: 0.2s;
   }
 
   &__line {
@@ -25,10 +26,14 @@
   }
 }
 
-.space {
+.Space {
   width: 300px;
 }
 
 .disabled {
   display: none;
+}
+.selected{
+  border-radius: 10px;
+  background: greenyellow;
 }

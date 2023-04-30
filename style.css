@@ -16,6 +16,7 @@
   align-items: center;
   justify-content: center;
   background: grey;
+  transition: 0.2s;
 }
 .keyboard__line {
   width: 100%;
@@ -23,10 +24,15 @@
   justify-content: space-around;
 }
 
-.space {
+.Space {
   width: 300px;
 }
 
 .disabled {
   display: none;
+}
+
+.selected {
+  border-radius: 10px;
+  background: greenyellow;
 }
