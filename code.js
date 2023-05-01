@@ -8,9 +8,29 @@ let altOn = false;
 
 let keyboard = document.createElement('div');
 keyboard.className = 'keyboard';
+let textArea = document.createElement('textarea');
+textArea.className = 'textArea';
+textArea.rows = 10;
+textArea.cols = 100;
+textArea.value = 'asdasd';
+let pos = textArea.selectionStart;
+textArea.autofocus = true;
+textArea.onclick = function () {
+  pos = textArea.selectionStart;
+};
+let langTitle = document.createElement('div');
+langTitle.className = 'text';
+let os = document.createElement('div');
+os.className = 'text';
+langTitle.textContent = 'Для смены языка раскладки клавиатуры нажмите левые Alt+Shift';
+os.textContent = 'Клавиатура создана в операционной системе Windows';
+
 
 function init() {
+  document.body.appendChild(textArea);
   document.body.appendChild(keyboard);
+  document.body.appendChild(os);
+  document.body.appendChild(langTitle);
 }
 init();
 
@@ -25,16 +45,16 @@ function setLocalStorage() {
   localStorage.setItem('lang', lang);
 }
 
-window.addEventListener('load', getLocalStorage,);
+getLocalStorage();
 window.addEventListener('beforeunload', setLocalStorage);
 
 //keypress events
 document.onkeydown = function keydown(event) {
   event.preventDefault();
-  let pressed = document.querySelector(`.${event.code}`);    
+  let pressed = document.querySelector(`.${event.code}`);
   if (pressed.classList.contains('ShiftLeft')) shifted();
   if (pressed.classList.contains('ShiftRight')) shifted();
-  if (pressed.classList.contains('AltLeft')) altOn=true;
+  if (pressed.classList.contains('AltLeft')) altOn = true;
   if (pressed.classList.contains('CapsLock')) {
     pressed.classList.toggle('selected');
     toggleCaps();
@@ -42,6 +62,10 @@ document.onkeydown = function keydown(event) {
   else {
     pressed.classList.add('selected');
     langChange();
+    let input = '';
+    pressed.childNodes.forEach(el => { if (!el.classList.contains('disabled')) input = el; });
+    input.childNodes.forEach(el => { if (!el.classList.contains('disabled')) input = el; });
+    textInput(input.textContent);
   }
 };
 
@@ -109,12 +133,12 @@ generateBoard();
 
 // lang change
 function revealLang(lang) {
-  document.querySelectorAll('.keyboard__buttn').forEach(el => el.childNodes.forEach(el=>el.classList.add('disabled')));
+  document.querySelectorAll('.keyboard__buttn').forEach(el => el.childNodes.forEach(el => el.classList.add('disabled')));
   document.querySelectorAll('.' + lang).forEach(el => el.classList.remove('disabled'));
 }
 
 function langChange() {
-  if(shiftOn && altOn){
+  if (shiftOn && altOn) {
     if (lang == 'en') {
       lang = 'ru';
       revealLang(lang);
@@ -123,7 +147,7 @@ function langChange() {
       lang = 'en';
       revealLang(lang);
     }
-  }  
+  }
 }
 
 function disableAll() {
@@ -156,4 +180,46 @@ function toggleCaps() {
     if (shiftOn) document.querySelectorAll('.capsShift').forEach(el => el.classList.remove('disabled'));
     else document.querySelectorAll('.caps').forEach(el => el.classList.remove('disabled'));
   }
+}
+
+document.querySelectorAll('.keyboard__buttn').forEach(el => targetClick(el));
+
+function targetClick(el) {
+  el.onclick = function () {
+    document.querySelectorAll('.keyboard__buttn').forEach(el => (!el.classList.contains('CapsLock')) ? el.classList.remove('selected') : 0);
+    this.classList.add('selected');
+    if (this.classList.contains('CapsLock')) {
+      if (capsOn) this.classList.remove('selected');
+      toggleCaps();
+    }
+    let input = '';
+    this.childNodes.forEach(el => { if (!el.classList.contains('disabled')) input = el; });
+    input.childNodes.forEach(el => { if (!el.classList.contains('disabled')) input = el; });
+    textInput(input.textContent);
+  };
+}
+
+function textInput(val) {
+  let text = textArea.value.split('');
+  if (val.length < 2) text.splice(pos, 0, val);
+  if (val == 'Tab') {
+    text.splice(pos, 0, '    ');
+    pos += 4;
+  }
+  if (val == 'Delete') {
+    text.splice(pos, 1);
+    if (pos < 1) pos = 0;
+  }
+  if (val == 'Backspace') {
+    text.splice(pos - 1, 1);
+    pos--;
+    if (pos < 1) pos = 0;
+  }
+  if (val == 'Enter') {
+    text.splice(pos, 0, '\n');
+    pos++;
+  }
+  textArea.value = text.join('');
+  if (val.length < 2) pos++;
+  textArea.selectionStart = pos;
 }

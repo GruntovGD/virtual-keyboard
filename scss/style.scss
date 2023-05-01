@@ -17,6 +17,7 @@
     justify-content: center;
     background: grey;
     transition: 0.2s;
+    cursor: pointer;
   }
 
   &__line {
@@ -36,4 +37,17 @@
 .selected{
   border-radius: 10px;
   background: greenyellow;
+}
+.textArea{
+  display: block;  
+  margin: 50px auto;
+  text-decoration: none;  
+}
+::selection{
+  background: transparent;
+}
+.text{
+  display: block;
+  margin: 10px auto;
+  text-align: center;
 }
