@@ -4,6 +4,7 @@ const buttns = { 0: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-',
 let lang = 'en';
 let shiftOn = false;
 let capsOn = false;
+let altOn = false;
 
 let keyboard = document.createElement('div');
 keyboard.className = 'keyboard';
@@ -29,23 +30,27 @@ window.addEventListener('beforeunload', setLocalStorage);
 
 //keypress events
 document.onkeydown = function keydown(event) {
-  event.preventDefault;
-  let pressed = document.querySelector(`.${event.code}`);
-  document.querySelector(`.Tab`).classList.remove('selected');
+  event.preventDefault();
+  let pressed = document.querySelector(`.${event.code}`);    
   if (pressed.classList.contains('ShiftLeft')) shifted();
   if (pressed.classList.contains('ShiftRight')) shifted();
+  if (pressed.classList.contains('AltLeft')) altOn=true;
   if (pressed.classList.contains('CapsLock')) {
     pressed.classList.toggle('selected');
     toggleCaps();
   }
-  else pressed.classList.add('selected');
+  else {
+    pressed.classList.add('selected');
+    langChange();
+  }
 };
 
 document.onkeyup = function keyUp(event) {
-  event.preventDefault;
+  event.preventDefault();
   let upped = document.querySelector(`.${event.code}`);
   if (upped.classList.contains('ShiftLeft')) unShifted();
   if (upped.classList.contains('ShiftRight')) unShifted();
+  if (upped.classList.contains('AltLeft')) altOn = false;
   if (!upped.classList.contains('CapsLock')) upped.classList.remove('selected');
 };
 
@@ -60,7 +65,7 @@ function generateBoard() {
     button.className = `keyboard__buttn ${buttns[6][i]}`;
     line.appendChild(button);
   }
-
+  revealLang(lang);
 }
 
 // button creation
@@ -104,9 +109,22 @@ generateBoard();
 
 // lang change
 function revealLang(lang) {
+  document.querySelectorAll('.keyboard__buttn').forEach(el => el.childNodes.forEach(el=>el.classList.add('disabled')));
   document.querySelectorAll('.' + lang).forEach(el => el.classList.remove('disabled'));
 }
-document.onload = revealLang(lang);
+
+function langChange() {
+  if(shiftOn && altOn){
+    if (lang == 'en') {
+      lang = 'ru';
+      revealLang(lang);
+    }
+    else {
+      lang = 'en';
+      revealLang(lang);
+    }
+  }  
+}
 
 function disableAll() {
   document.querySelectorAll('.keyboard__buttn').forEach(el => el.childNodes.forEach(el => el.childNodes.forEach(el => el.classList.add('disabled'))));
@@ -114,35 +132,28 @@ function disableAll() {
 
 function shifted() {
   disableAll();
-  shiftOn = true;  
-  if (capsOn){
-    document.querySelectorAll('.capsShift').forEach(el => el.classList.remove('disabled'));
-  }
-  else{
-    document.querySelectorAll('.shift').forEach(el => el.classList.remove('disabled'));
-  }
+  shiftOn = true;
+  if (capsOn) document.querySelectorAll('.capsShift').forEach(el => el.classList.remove('disabled'));
+  else document.querySelectorAll('.shift').forEach(el => el.classList.remove('disabled'));
 }
 
 function unShifted() {
   disableAll();
-  shiftOn = false;  
-  if(capsOn){
-    document.querySelectorAll('.caps').forEach(el => el.classList.remove('disabled'));
-  }
-  else{
-    document.querySelectorAll('.norm').forEach(el => el.classList.remove('disabled'));
-  }
+  shiftOn = false;
+  if (capsOn) document.querySelectorAll('.caps').forEach(el => el.classList.remove('disabled'));
+  else document.querySelectorAll('.norm').forEach(el => el.classList.remove('disabled'));
 }
 
 function toggleCaps() {
   disableAll();
   if (capsOn) {
-    document.querySelectorAll('.norm').forEach(el => el.classList.remove('disabled'));
-    capsOn=false;
+    capsOn = false;
+    if (shiftOn) document.querySelectorAll('.shift').forEach(el => el.classList.remove('disabled'));
+    else document.querySelectorAll('.norm').forEach(el => el.classList.remove('disabled'));
   }
-  else{
+  else {
     capsOn = true;
-    document.querySelectorAll('.caps').forEach(el => el.classList.remove('disabled'));
+    if (shiftOn) document.querySelectorAll('.capsShift').forEach(el => el.classList.remove('disabled'));
+    else document.querySelectorAll('.caps').forEach(el => el.classList.remove('disabled'));
   }
-  
 }
