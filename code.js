@@ -12,7 +12,7 @@ let textArea = document.createElement('textarea');
 textArea.className = 'textArea';
 textArea.rows = 10;
 textArea.cols = 100;
-textArea.value = 'asdasd';
+
 let pos = textArea.selectionStart;
 textArea.autofocus = true;
 textArea.onclick = function () {
@@ -154,6 +154,7 @@ function disableAll() {
   document.querySelectorAll('.keyboard__buttn').forEach(el => el.childNodes.forEach(el => el.childNodes.forEach(el => el.classList.add('disabled'))));
 }
 
+//advanced keys options
 function shifted() {
   disableAll();
   shiftOn = true;
@@ -182,6 +183,7 @@ function toggleCaps() {
   }
 }
 
+//mouse click options
 document.querySelectorAll('.keyboard__buttn').forEach(el => targetClick(el));
 
 function targetClick(el) {
@@ -199,6 +201,7 @@ function targetClick(el) {
   };
 }
 
+//textarea text input
 function textInput(val) {
   let text = textArea.value.split('');
   if (val.length < 2) text.splice(pos, 0, val);
