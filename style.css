@@ -1,0 +1,59 @@
+.keyboard {
+  background: black;
+  border: 1px solid red;
+  display: flex;
+  flex-wrap: wrap;
+  width: 950px;
+  margin: 50px auto;
+}
+.keyboard__buttn {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid black;
+  min-width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: grey;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.keyboard__line {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Space {
+  width: 300px;
+}
+
+.disabled {
+  display: none;
+}
+
+.selected {
+  border-radius: 10px;
+  background: greenyellow;
+}
+
+.textArea {
+  display: block;
+  margin: 50px auto;
+  text-decoration: none;
+}
+
+::-moz-selection {
+  background: transparent;
+}
+
+::selection {
+  background: transparent;
+}
+
+.text {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}

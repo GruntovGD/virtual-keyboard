@@ -1,0 +1,24 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "best keyboard simulator",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:es": "eslint --ext .js",
+    "lint:es:fix": "npm run lint:es -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GruntovGD/virtual-keyboard.git"
+  },
+  "author": "GruntovGD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GruntovGD/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/GruntovGD/virtual-keyboard#readme",
+  "devDependencies": {
+    "eslint": "^8.39.0"
+  }
+}
