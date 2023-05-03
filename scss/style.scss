@@ -34,19 +34,23 @@
 .disabled {
   display: none;
 }
-.selected{
+
+.selected {
   border-radius: 10px;
   background: greenyellow;
 }
-.textArea{
-  display: block;  
+
+.textArea {
+  display: block;
   margin: 50px auto;
-  text-decoration: none;  
+  text-decoration: none;
 }
-::selection{
+
+::selection {
   background: transparent;
 }
-.text{
+
+.text {
   display: block;
   margin: 10px auto;
   text-align: center;

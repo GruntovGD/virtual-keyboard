@@ -22,7 +22,7 @@ let langTitle = document.createElement('div');
 langTitle.className = 'text';
 let os = document.createElement('div');
 os.className = 'text';
-langTitle.textContent = 'Для смены языка раскладки клавиатуры нажмите левые Alt+Shift';
+langTitle.textContent = 'Для смены языка раскладки клавиатуры одновременно нажмите левые Alt+Shift';
 os.textContent = 'Клавиатура создана в операционной системе Windows';
 
 
